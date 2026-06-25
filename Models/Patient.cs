@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mini_projet.Models
+﻿namespace Mini_projet.Models
 {
-    internal class Patint
+    public class Patient
     {
+        public int Id { get; set; }
+        public string FullName { get; set; }
+        public int Age { get; set; }
+        public string Email { get; set; }
+        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }

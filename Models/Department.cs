@@ -9,5 +9,6 @@ namespace Mini_projet.Models
         public int Floor { get; set; }
         [Phone]
         public string PhoneNumber { get; set; }
+        public ICollection<Doctor> Doctors { get; set; }
     }
 }

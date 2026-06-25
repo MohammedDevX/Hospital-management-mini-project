@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mini_projet.Enums
+﻿namespace Mini_projet.Enums
 {
-    internal class Class1
+    public enum DoctorSpeciality
     {
+        GeneralPractitioner = 1,
+        Cardiologist = 2,
+        Neurologist = 3,
+        Dermatologist = 4,
+        Pediatrician = 5,
+        Orthopedic = 6,
+        Radiologist = 7
     }
 }

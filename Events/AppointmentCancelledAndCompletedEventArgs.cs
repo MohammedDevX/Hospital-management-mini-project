@@ -2,7 +2,7 @@
 
 namespace Mini_projet.Events
 {
-    public class AppointmentCreatedEventArgs : EventArgs
+    public class AppointmentCancelledEventArgs : EventArgs
     {
         public Guid Id { get; init; }
         public Doctor Doctor { get; init; }

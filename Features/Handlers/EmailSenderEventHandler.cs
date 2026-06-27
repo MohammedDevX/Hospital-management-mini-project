@@ -5,7 +5,7 @@ namespace Mini_projet.Events
 {
     public class EmailSenderEventHandler
     {
-        public void Notify(object o, AppointmentCreatedEventArgs e)
+        private void Notify(string body)
         {
             //var smtpClient = new SmtpClient("smtp.votre-serveur.com")
             //{
@@ -14,22 +14,50 @@ namespace Mini_projet.Events
             //    EnableSsl = true,
             //};
 
-            string body =
-                $"""
-                Hello {e.Patient.FullName}
+            //string body =
+            //    $"""
+            //    Hello {e.Patient.FullName}
 
-                Your appointment with Dr. {e.Doctor.FullName}
+            //    Your appointment with Dr. {e.Doctor.FullName}
 
-                has been scheduled on
+            //    has been scheduled on
 
-                {e.ShedualedAt}
-                """;
+            //    {e.ShedualedAt}
+            //    """;
 
             Console.WriteLine("Email sender : " + body);
 
             //string subject = "Appointment reservation";
 
             //smtpClient.Send("itsbakhtaouimohammed548@gmail.com", e.Patient.Email, subject, body);
+        }
+
+        public void AppointmentCreatedNotify(object o, AppointmentCreatedEventArgs e)
+        {
+            string msg = $"""
+                Hello { e.Patient.FullName}
+
+            Your appointment with Dr. { e.Doctor.FullName}
+
+            has been scheduled on
+
+                { e.ShedualedAt}
+            """;
+
+            Notify(msg);
+        }
+
+        public void AppointmentCancelledNotify(object o, AppointmentCancelledEventArgs e)
+        {
+            string msg = $"""
+                Hello {e.Patient.FullName}
+
+                Your appointment with Dr. {e.Doctor.FullName} in {e.ShedualedAt}
+
+                has been cancelled
+                """;
+
+            Notify(msg);
         }
     }
 }

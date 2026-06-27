@@ -6,7 +6,7 @@ namespace Mini_projet.Features.Handlers
     {
         private string path = "C:\\Users\\hp\\Desktop\\C# projects\\TPS\\Mini_projet\\Mini_projet\\Logs\\logs.txt";
 
-        public void AppointmentCretatedLog(object o, AppointmentCreatedEventArgs e)
+        private void Log(string ligne)
         {
             if (!File.Exists(path))
             {
@@ -15,11 +15,33 @@ namespace Mini_projet.Features.Handlers
 
             List<string> lignes = File.ReadAllLines(path).ToList();
 
-            string ligne = $"{DateTime.UtcNow} [New appointment created | Doctor : {e.Doctor.FullName} | Patient : {e.Patient.FullName}" +
-                $" | SheduledAt : {e.ShedualedAt}]";
             lignes.Insert(0, ligne);
 
             File.WriteAllLines(path, lignes);
+        }
+
+        public void AppointmentCreatedLog(object source, AppointmentCreatedEventArgs e)
+        {
+            string ligne = $"{DateTime.UtcNow} [New appointment created | Id : {e.Id} | Doctor : {e.Doctor.FullName} " +
+                $"| Patient : {e.Patient.FullName} | SheduledAt : {e.ShedualedAt}]";
+
+            Log(ligne);
+        }
+
+        public void AppointmentCancelledLog(object source, AppointmentCancelledEventArgs e)
+        {
+            string ligne = $"{DateTime.UtcNow} [Appointment cancelled | Id : {e.Id} | Doctor : {e.Doctor.FullName} " +
+                $"| Patient : {e.Patient.FullName} | SheduledAt : {e.ShedualedAt}]";
+
+            Log(ligne);
+        }
+
+        public void AppointmentCompletedLog(object source, AppointmentCancelledEventArgs e)
+        {
+            string ligne = $"{DateTime.UtcNow} [Appointment completed | Id : {e.Id} | Doctor : {e.Doctor.FullName} " +
+                $"| Patient : {e.Patient.FullName} | SheduledAt : {e.ShedualedAt}]";
+
+            Log(ligne);
         }
     }
 }

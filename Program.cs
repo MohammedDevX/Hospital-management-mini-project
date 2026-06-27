@@ -17,8 +17,12 @@ AppointmentService appointmentService = new(doctor , patient, appointment);
 EmailSenderEventHandler emailSnder = new();
 LogEventHandler log = new();
 
-appointmentService.appointmentCreatedEvent += emailSnder.Notify;
-appointmentService.appointmentCreatedEvent += log.AppointmentCretatedLog;
+appointmentService.AppointmentCreatedEvent += emailSnder.AppointmentCreatedNotify;
+appointmentService.AppointmentCreatedEvent += log.AppointmentCreatedLog;
+appointmentService.AppointmentCanceledByPatientEvent += log.AppointmentCancelledLog;
+appointmentService.AppointmentCanceledByDoctorEvent += log.AppointmentCancelledLog;
+appointmentService.AppointmentCanceledByDoctorEvent += emailSnder.AppointmentCancelledNotify;
+appointmentService.AppointmentCompleltedEvent += log.AppointmentCompletedLog;
 
 Department department1 = new() 
 { 
@@ -47,7 +51,7 @@ patient.Add(p1);
 appointmentService.ReserveAppointment(p1.Id, d1.Id, new DateTime(2026, 6, 27, 16, 30, 0));
 appointmentService.ReserveAppointment(p1.Id, d1.Id, new DateTime(2026, 6, 27, 16, 30, 1));
 
-foreach (var item in appointment.GetAll())
-{
-    Console.WriteLine(item.ScheduledAt);
-}
+//appointmentService.CancelAppointmentByPatient(p1.Id, appointment.Find(a => a.Patient.Id == p1.Id).FirstOrDefault().Id);
+//appointmentService.CancelAppointmentByDoctor(d1.Id, appointment.Find(a => a.Doctor.Id == d1.Id).FirstOrDefault().Id);
+
+appointmentService.CompleteAppointment(d1.Id, appointment.Find(a => a.Doctor.Id == d1.Id).FirstOrDefault().Id);

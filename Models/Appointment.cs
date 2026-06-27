@@ -9,6 +9,6 @@ namespace Mini_projet.Models
         public required Patient Patient { get; init; }
         public required Doctor Doctor { get; set; }
         public DateTime ScheduledAt { get; set; }
-        public AppointmentStatus Status { get; set; } = AppointmentStatus.Pending;
+        public AppointmentStatus Status { get; set; } = AppointmentStatus.Confirmed;
     }
 }

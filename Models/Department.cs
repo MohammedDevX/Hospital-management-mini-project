@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Mini_projet.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mini_projet.Models
 {
-    public class Department
+    public class Department : IIdentifiable
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public Guid Id { get; init; } = Guid.NewGuid();
+        public required string Name { get; set; }
         public int Floor { get; set; }
-        [Phone]
-        public string PhoneNumber { get; set; }
-        public ICollection<Doctor> Doctors { get; set; }
+        public required string PhoneNumber { get; set; }
+        public ICollection<Doctor>? Doctors { get; } = new List<Doctor>();
     }
 }

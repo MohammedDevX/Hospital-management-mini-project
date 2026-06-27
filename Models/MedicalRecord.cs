@@ -1,13 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Mini_projet.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mini_projet.Models
 {
-    public class MedicalRecord
+    public class MedicalRecord : IIdentifiable
     {
-        public int Id { get; set; }
-        public Patient Patient { get; set; }
-        public Doctor Doctor { get; set; }
-        public string Diagnosis { get; set; }
-        public DateTime VisitDate { get; set; }
+        public Guid Id { get; init; } = Guid.NewGuid();
+        public required Patient Patient { get; init; }
+        public required Doctor Doctor { get; set; }
+        public required string Diagnosis { get; set; }
+        public DateTime ScheduledAt { get; set; }
+
+        
     }
 }

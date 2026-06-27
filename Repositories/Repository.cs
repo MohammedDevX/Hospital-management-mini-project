@@ -1,15 +1,18 @@
-﻿namespace Mini_projet.Repositories
+﻿using Mini_projet.Interfaces;
+
+namespace Mini_projet.Repositories
 {
     /* - Sumuary : 
      * This is generique repository so he can work with any model class with out defining it explicitly
-     * The same in Find() method, thunks for c# who provide delegates that allow us to find object with specefique condition
+     * The same in Find() method, thunks for c# that provide delegates that allow us to find object with specefique condition
         in collection, also it works with different classes 
     */
-    public class Repositorie<T> where T : IIdentifiable
+    public class Repository<T> : IRepository<T> where T : IIdentifiable // Here the generique attribute have condition he need to implemente
+                                                        // IIdentifiable interface
     {
         private readonly List<T> items = new();
 
-        public T? GetById(int id)
+        public T? GetById(Guid id)
         {
             var item = items.FirstOrDefault(i => i.Id == id);
             return item;
@@ -25,7 +28,7 @@
             items.Add(item);
         }
 
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             var existringItem = items.FirstOrDefault(i => i.Id == id);
             if (existringItem == null)

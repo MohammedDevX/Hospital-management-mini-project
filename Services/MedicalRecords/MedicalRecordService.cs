@@ -1,6 +1,6 @@
-﻿using Mini_projet.Models;
+﻿using Mini_projet.Exceptions;
+using Mini_projet.Models;
 using Mini_projet.Repositories;
-using System.Xml.Serialization;
 
 namespace Mini_projet.Services.MedicalRecords
 {
@@ -14,14 +14,9 @@ namespace Mini_projet.Services.MedicalRecords
             var appointment = _appointmentRepository.Find(a => a.Doctor.Id == doctorId
                             && a.Id == appointmentId && a.Status == Enums.AppointmentStatus.Completed).FirstOrDefault();
 
-            //if (_medicalRecordRepository.Find(m => m.Appointment.Id == appointmentId).Any())
-            //{
-            //    throw new InvalidDataException();
-            //}
-
             if (appointment.MedicalRecord is not null || appointment is null)
             {
-                throw new InvalidOperationException();
+                throw new AppointmentNotFoundException(appointmentId);
             }
 
             MedicalRecord medicalRecord = new()

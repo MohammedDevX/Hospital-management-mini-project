@@ -1,9 +1,9 @@
 ﻿using Mini_projet.Events;
 using Mini_projet.Models;
 using Mini_projet.Repositories;
-using Mini_projet.Services;
 using Mini_projet.Enums;
 using Mini_projet.Features.Handlers;
+using Mini_projet.Services.Apointments;
 
 // Dependencies : 
 IRepository<Doctor> doctor = new Repository<Doctor>();

@@ -10,5 +10,6 @@ namespace Mini_projet.Models
         public required Doctor Doctor { get; set; }
         public DateTime ScheduledAt { get; set; }
         public AppointmentStatus Status { get; set; } = AppointmentStatus.Confirmed;
+        public MedicalRecord? MedicalRecord { get; set; }
     }
 }

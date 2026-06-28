@@ -28,7 +28,7 @@ namespace Mini_projet.Features.Handlers
             Log(ligne);
         }
 
-        public void AppointmentCancelledLog(object source, AppointmentCancelledEventArgs e)
+        public void AppointmentCancelledLog(object source, AppointmentCancelledAndCompletedEventArgs e)
         {
             string ligne = $"{DateTime.UtcNow} [Appointment cancelled | Id : {e.Id} | Doctor : {e.Doctor.FullName} " +
                 $"| Patient : {e.Patient.FullName} | SheduledAt : {e.ShedualedAt}]";
@@ -36,7 +36,7 @@ namespace Mini_projet.Features.Handlers
             Log(ligne);
         }
 
-        public void AppointmentCompletedLog(object source, AppointmentCancelledEventArgs e)
+        public void AppointmentCompletedLog(object source, AppointmentCancelledAndCompletedEventArgs e)
         {
             string ligne = $"{DateTime.UtcNow} [Appointment completed | Id : {e.Id} | Doctor : {e.Doctor.FullName} " +
                 $"| Patient : {e.Patient.FullName} | SheduledAt : {e.ShedualedAt}]";

@@ -9,8 +9,7 @@ namespace Mini_projet.Models
         public required Patient Patient { get; init; }
         public required Doctor Doctor { get; set; }
         public required string Diagnosis { get; set; }
-        public DateTime ScheduledAt { get; set; }
-
-        
+        public DateTime ScheduledAt { get; init; } = DateTime.UtcNow;
+        public required Appointment Appointment { get; init; }
     }
 }

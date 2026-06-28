@@ -1,8 +1,9 @@
 ﻿using Mini_projet.Events;
+using Mini_projet.Exceptions;
 using Mini_projet.Models;
 using Mini_projet.Repositories;
 
-namespace Mini_projet.Services
+namespace Mini_projet.Services.Apointments
 {
     public class AppointmentService(
         IRepository<Doctor> _doctorRepository, 
@@ -10,22 +11,22 @@ namespace Mini_projet.Services
         IRepository<Appointment> _appointmentRepository)
     {
         public event EventHandler<AppointmentCreatedEventArgs> AppointmentCreatedEvent;
-        public event EventHandler<AppointmentCancelledEventArgs> AppointmentCanceledByPatientEvent;
-        public event EventHandler<AppointmentCancelledEventArgs> AppointmentCanceledByDoctorEvent;
-        public event EventHandler<AppointmentCancelledEventArgs> AppointmentCompleltedEvent;
+        public event EventHandler<AppointmentCancelledAndCompletedEventArgs> AppointmentCanceledByPatientEvent;
+        public event EventHandler<AppointmentCancelledAndCompletedEventArgs> AppointmentCanceledByDoctorEvent;
+        public event EventHandler<AppointmentCancelledAndCompletedEventArgs> AppointmentCompleltedEvent;
 
         public void ReserveAppointment(Guid patientId, Guid doctorId, DateTime appointmentDate)
         {
             var patient = _patientRepository.GetById(patientId);
             if (patient == null)
             {
-                throw new ArgumentException("Patient not found");
+                throw new PatientNotFoundException(patientId);
             }
 
             var doctor = _doctorRepository.GetById(doctorId);
             if (doctor == null)
             {
-                throw new ArgumentException("Doctor not found");
+                throw new DoctorNotFoundException(doctorId);
             }
 
             bool disponibility = AppointmentDateAndDoctorDisponibility(appointmentDate, doctor.Id);
@@ -81,7 +82,7 @@ namespace Mini_projet.Services
 
             appointment.Status = Enums.AppointmentStatus.Cancelled;
 
-            var eventArgs = new AppointmentCancelledEventArgs()
+            var eventArgs = new AppointmentCancelledAndCompletedEventArgs()
             {
                 Id = appointment.Id,
                 Doctor = appointment.Doctor,
@@ -103,7 +104,7 @@ namespace Mini_projet.Services
 
             appointment.Status = Enums.AppointmentStatus.Cancelled;
 
-            var eventArgs = new AppointmentCancelledEventArgs()
+            var eventArgs = new AppointmentCancelledAndCompletedEventArgs()
             {
                 Id = appointment.Id,
                 Doctor = appointment.Doctor,
@@ -121,12 +122,12 @@ namespace Mini_projet.Services
 
             if (appointment == null)
             {
-                throw new InvalidDataException();
+                throw new ComfirmedAppointmentException();
             }
 
             appointment.Status = Enums.AppointmentStatus.Completed;
 
-            var eventArgs = new AppointmentCancelledEventArgs()
+            var eventArgs = new AppointmentCancelledAndCompletedEventArgs()
             {
                 Id = appointment.Id,
                 Doctor = appointment.Doctor,

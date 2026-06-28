@@ -47,7 +47,7 @@ namespace Mini_projet.Events
             Notify(msg);
         }
 
-        public void AppointmentCancelledNotify(object o, AppointmentCancelledEventArgs e)
+        public void AppointmentCancelledNotify(object o, AppointmentCancelledAndCompletedEventArgs e)
         {
             string msg = $"""
                 Hello {e.Patient.FullName}
